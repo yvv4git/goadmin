@@ -1,0 +1,2 @@
+GOOS=windows GOARCH=386 go build windows.go
+GOOS=windows GOARCH=386 go -ldflags "-s -H windowsgui" build windows.go
