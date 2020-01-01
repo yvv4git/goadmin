@@ -71,10 +71,10 @@ func cmdParse(cmd string) {
 		botId := reCmd.FindString(cmd)
 		botId = strings.TrimSuffix(botId, ":")
 		botID, _ := strconv.Atoi(botId)
-        
-        if botID < len(clients) {
-            // шлем сообщение клиенту
-            clients[botID].Send(cmdExec)
-        }
+
+		if botID < len(clients) {
+			// шлем сообщение клиенту
+			clients[botID].Send(cmdExec)
+		}
 	}
 }

@@ -40,13 +40,13 @@ func (c *Client) listen() {
 	}
 }
 
-//
+// Посылаем клиенту строку
 func (c *Client) Send(message string) error {
 	_, err := c.conn.Write([]byte(message))
 	return err
 }
 
-// Send bytes to client
+// Посылаем клиенту байты
 func (c *Client) SendBytes(b []byte) error {
 	_, err := c.conn.Write(b)
 	return err
@@ -99,7 +99,7 @@ func (s *server) Listen() {
 	}
 }
 
-// Creates new tcp server instance
+// Создаем инстанс для сервера без шифрования
 func New(address string) *server {
 	log.Println("Creating server with address", address)
 	server := &server{
@@ -107,15 +107,14 @@ func New(address string) *server {
 		config:  nil,
 	}
 
-	/*
-		server.OnNewClient(func(c *Client) {})
-		server.OnNewMessage(func(c *Client, message string) {})
-		server.OnClientConnectionClosed(func(c *Client, err error) {})
-	*/
+	server.OnNewClient(func(c *Client) {})
+	server.OnNewMessage(func(c *Client, message string) {})
+	server.OnClientConnectionClosed(func(c *Client, err error) {})
 
 	return server
 }
 
+// Создаем инстанс шифрованног сервера
 func NewWithTLS(address string, certFile string, keyFile string) *server {
 	log.Println("Creating server with address", address)
 	cert, _ := tls.LoadX509KeyPair(certFile, keyFile)

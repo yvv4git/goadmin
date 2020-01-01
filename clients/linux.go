@@ -5,9 +5,9 @@ package main
 
 import (
 	"crypto/tls"
+	"log"
 	"os/exec"
 	"time"
-	"log"
 )
 
 func main() {
@@ -29,7 +29,7 @@ func reverse(host string) {
 	// создаем конфиг tls
 	config := tls.Config{Certificates: []tls.Certificate{cert}, InsecureSkipVerify: true}
 	c, err := tls.Dial("tcp", hostName+":"+portNum, &config)
-	
+
 	if nil != err {
 		if nil != c {
 			c.Close()
