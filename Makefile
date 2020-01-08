@@ -28,6 +28,10 @@ windows:
 	#GOOS=windows GOARCH=386 go build -ldflags "-s -H windowsgui" -o $(DIR)/$(BIN_SERVER)_windows_386.exe server/main.go server/server.go
 	GOOS=windows GOARCH=386 go build -ldflags "-s -H windowsgui" -o $(DIR)/$(BIN_CLIENT)_windows_386.exe client/windows.go
 
+certs:
+	openssl req -x509 -newkey rsa:4096 -keyout $(DIR)/client.key -out $(DIR)/client.pem -days 365 -nodes
+	openssl req -x509 -newkey rsa:4096 -keyout $(DIR)/server.key -out $(DIR)/server.pem -days 365 -nodes
+
 .PHONY: clean
 clean:
 	rm -r $(DIR)

