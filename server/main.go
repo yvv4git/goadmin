@@ -10,10 +10,11 @@ import (
 )
 
 var clients []*Client
+var hostPort string
 
 func main() {
 	//server := New("0.0.0.0:12345")
-	server := NewWithTLS("0.0.0.0:12345", "server.pem", "server.key")
+	server := NewWithTLS(hostPort, "server.pem", "server.key")
 
 	// На вход - анонимная функция, обрабатывающая подключение нового клиенат.
 	// Допустим, здесь мы шлем клиенту сообщение при подключении.
